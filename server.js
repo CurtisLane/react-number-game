@@ -2,11 +2,12 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
-require("./routes")(app);
 
 // Configure body parsing for AJAX requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+require("./routes")(app);
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
