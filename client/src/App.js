@@ -1,25 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
+import GameContext from './utils/GameContext';
+import useGameModel from './utils/useGameModel';
+import Home from './pages/home/Home';
+import Error from './pages/error/Error';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GameContext.Provider value={useGameModel()}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="*" component={Error} />
+        </Switch>
+      </Router>
+    </GameContext.Provider>
   );
 }
 
