@@ -8,7 +8,7 @@ export default function Home(){
         <div className="container">
             <div className="row mt-5">
                 <div className="col-12 col-md-8 col-lg-6 offset-lg-1">
-                    {/* game board goes here */}
+                    {/* game board */}
                     <Board />
                 </div>
                 <div className="col-12 col-md-2 col-lg-3 offset-md-1">

@@ -1,27 +1,37 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Card from 'react-bootstrap/Card'
 import Tile from '../tile/Tile'
+import GameContext from '../../utils/GameContext'
 
-let temp = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-export default function Board() {
+// Includes game logic, displays numbered tiles
+
+
+// Array shuffle function
+const shuffle = array => array.sort(() => Math.random() - 0.5);
+
+
+const Board = () => {
+    
+    const { gameState, setGameState } = useContext(GameContext)
+    let shuffledTiles = shuffle(gameState.tileNumbers)
+
     return (
-        <Card className="bg-dark">
+        <Card className="bg-dark" style={{ width: "100%", padding: "-10% 0 -10% 0", position: "relative" }}>
             <Card.Body>
-                <div className="row">
-                    {temp.map(t => {
-                        return t > 0?
+                <div style={{position: "relative", bottom: 0}} className="row no-gutters">
+                    {shuffledTiles.map(t => {
+                        return t > 0 ?
                             (
-                                <div className="col-4">
+                                <div key={t} className="col-4">
                                     <Tile
-                                    key={t}
                                     num={t}
                                     />
                                 </div>
                             )
                             :
                             (
-                                <div className="col-4">
-                                    empty
+                                <div key={t} className="col-4">
+                                    {/* empty space */}
                                 </div>
                             )
                         
@@ -32,3 +42,5 @@ export default function Board() {
         </Card>
     )
 }
+
+export default Board;
