@@ -1,0 +1,33 @@
+.num-tile {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 52.5%;
+    position: relative;
+    bottom: 0;
+}
+
+@media screen and (max-width: 1200px){
+    .num-tile {
+        padding-bottom: 47.5%;
+    }
+}
+@media screen and (max-width: 750px){
+    .num-tile {
+        padding-bottom: 50%;
+    }
+}
+@media screen and (max-width: 600px){
+    .num-tile {
+        padding-bottom: 45%;
+    }
+}
+@media screen and (max-width: 450px){
+    .num-tile {
+        padding-bottom: 40%;
+    }
+}
+@media screen and (max-width: 300px){
+    .num-tile {
+        padding-bottom: 35%;
+    }
+}

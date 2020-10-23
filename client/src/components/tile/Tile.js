@@ -1,10 +1,11 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
+import './tile.css'
 
-export default function Tile({num}) {
+export default function Tile({ num, click }) {
     return (
-        <Card className="bg-light" style={{width: "100%", height: "100%", paddingBottom: "40%", position: "relative", bottom: "0"}}>
-            <Card.Body>{num}</Card.Body>
+        <Card className="bg-light num-tile" value={num} onClick={click}>
+            <Card.Body value={num}>{num}</Card.Body>
         </Card>
     )
 }
