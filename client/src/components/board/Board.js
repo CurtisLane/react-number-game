@@ -5,18 +5,17 @@ import GameContext from '../../utils/GameContext'
 
 // Includes game logic, displays numbered tiles
 
-
 // Array shuffle function
 const shuffle = array => array.sort(() => Math.random() - 0.5);
+// check if an array will create a solveable game
 const isSolveable = array => {
     const a = array.length
     let inversions = 0
     for (let i = 0; i < a; i++){
-        if (array[i] + array[i+1] > 0){
-            inversions += (array[i] + array[i+1])
+        if (array[i] - array[i+1] > 0){
+            inversions += Math.abs(array[i] - array[i+1])
         }
     }
-    console.log(inversions)
     if (inversions % 2){
         return false
     } else {
@@ -30,9 +29,10 @@ const Board = () => {
 
     const setTiles = () => {
         let shuffledTiles = shuffle(gameState.tileNumbers)
-        if (isSolveable(shuffledTiles)){
+        let solveable = isSolveable(shuffledTiles)
+        console.log(shuffledTiles, solveable)
+        if (solveable){
             setGameState({...gameState, shuffledTiles: shuffledTiles, gameOver: false})
-            console.log(gameState.shuffledTiles)
         } else {
             setTiles()
         }
@@ -65,14 +65,14 @@ const Board = () => {
     }
 
     const moveTile = (tileValIndex, zeroIndex) => {
+        const winArr = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         const a = gameState.shuffledTiles[tileValIndex];
         let s = gameState.shuffledTiles;
         s[tileValIndex] = s[zeroIndex];
         s[zeroIndex] = a;
         setGameState({...gameState, shuffledTiles: s});
         console.log(gameState.shuffledTiles)
-        if (gameState.ShuffledTiles === [1, 2, 3, 4, 5, 6, 7, 8, 0]){
-            console.log("Game over?")
+        if (gameState.shuffledTiles.every((val, index) => val === winArr[index])){
             handleGameOver()
         }
     }
