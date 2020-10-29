@@ -8,16 +8,38 @@ import GameContext from '../../utils/GameContext'
 
 // Array shuffle function
 const shuffle = array => array.sort(() => Math.random() - 0.5);
-
+const isSolveable = array => {
+    const a = array.length
+    let inversions = 0
+    for (let i = 0; i < a; i++){
+        if (array[i] + array[i+1] > 0){
+            inversions += (array[i] + array[i+1])
+        }
+    }
+    console.log(inversions)
+    if (inversions % 2){
+        return false
+    } else {
+        return true
+    }
+}
 
 const Board = () => {
     
     const { gameState, setGameState } = useContext(GameContext)
+
+    const setTiles = () => {
+        let shuffledTiles = shuffle(gameState.tileNumbers)
+        if (isSolveable(shuffledTiles)){
+            setGameState({...gameState, shuffledTiles: shuffledTiles, gameOver: false})
+            console.log(gameState.shuffledTiles)
+        } else {
+            setTiles()
+        }
+    }
     
     useEffect(() => {
-        let shuffledTiles = shuffle(gameState.tileNumbers)
-        setGameState({...gameState, shuffledTiles: shuffledTiles, gameOver: false})
-        console.log(gameState.shuffledTiles)
+        setTiles()
     }, [])
     
     const handleClick = e => {
@@ -25,25 +47,39 @@ const Board = () => {
         const tileVal = e.target.attributes.value["value"]
         const tileValIndex = gameState.shuffledTiles.indexOf(parseInt(tileVal))
 
-        // if clicked tile is next to 0
-        if (Math.abs(zeroIndex - tileValIndex) === 3 || Math.abs(zeroIndex - tileValIndex) === 1) {
-            moveTile(tileValIndex, zeroIndex)
+        // if clicked tile is next to 0, move tile
+        if (tileValIndex === 1 || tileValIndex === 3 || tileValIndex === 4 || tileValIndex === 5 || tileValIndex === 7 ){
+            if (Math.abs(zeroIndex - tileValIndex) === 3 || Math.abs(zeroIndex - tileValIndex) === 1) {
+                moveTile(tileValIndex, zeroIndex)
+            }
+        } else if (tileValIndex === 0 || tileValIndex === 6){
+            if (Math.abs(zeroIndex - tileValIndex) === 3 || zeroIndex - tileValIndex === 1) {
+                moveTile(tileValIndex, zeroIndex)
+            }
+        } else if (tileValIndex === 2 || tileValIndex === 8){
+            if (Math.abs(zeroIndex - tileValIndex) === 3 || zeroIndex - tileValIndex === -1) {
+                moveTile(tileValIndex, zeroIndex)
+            }
         }
         
     }
 
     const moveTile = (tileValIndex, zeroIndex) => {
         const a = gameState.shuffledTiles[tileValIndex];
-        
-        let s = gameState.shuffledTiles
+        let s = gameState.shuffledTiles;
         s[tileValIndex] = s[zeroIndex];
         s[zeroIndex] = a;
-        setGameState({...gameState, shuffledTiles: s})
+        setGameState({...gameState, shuffledTiles: s});
+        console.log(gameState.shuffledTiles)
+        if (gameState.ShuffledTiles === [1, 2, 3, 4, 5, 6, 7, 8, 0]){
+            console.log("Game over?")
+            handleGameOver()
+        }
     }
 
     const handleGameOver = () => {
-        setGameState({...gameState, gameOver: true})
-        alert("Game over!")
+        setGameState({...gameState, gameOver: true});
+        console.log("Game over!");
     }
 
     return (

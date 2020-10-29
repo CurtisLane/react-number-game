@@ -7,7 +7,7 @@ const useGameModel = () => {
         
             shuffledTiles: [],
         
-            gameOver: false
+            gameOver: true
         }
     )
 
