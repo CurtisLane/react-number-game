@@ -4,16 +4,18 @@ const useGameModel = () => {
     const [gameState, setGameState] = useState(
         {
             tileNumbers: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-        
             shuffledTiles: [],
-        
             gameOver: true
         }
     )
 
+    const [highScoresState, setHighScoresState] = useState()
+
     return {
         gameState,
-        setGameState
+        setGameState,
+        highScoresState,
+        setHighScoresState
     }
 }
 

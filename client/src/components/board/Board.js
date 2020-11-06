@@ -7,15 +7,18 @@ import GameContext from '../../utils/GameContext'
 
 // Array shuffle function
 const shuffle = array => array.sort(() => Math.random() - 0.5);
+
 // check if an array will create a solveable game
 const isSolveable = array => {
     const a = array.length
     let inversions = 0
     for (let i = 0; i < a; i++){
-        if (array[i] - array[i+1] > 0){
-            inversions += Math.abs(array[i] - array[i+1])
-        }
+        for (let j = i + 1; j < a; j++)
+            if ((array[i] > array[j]) && (array[i] > 0) && (array[j] > 0)){
+                inversions++ 
+            }
     }
+    console.log(array, inversions)
     if (inversions % 2){
         return false
     } else {
@@ -30,18 +33,18 @@ const Board = () => {
     const setTiles = () => {
         let shuffledTiles = shuffle(gameState.tileNumbers)
         let solveable = isSolveable(shuffledTiles)
-        console.log(shuffledTiles, solveable)
+        console.log(solveable)
         if (solveable){
             setGameState({...gameState, shuffledTiles: shuffledTiles, gameOver: false})
         } else {
             setTiles()
         }
     }
-    
+
     useEffect(() => {
         setTiles()
     }, [])
-    
+
     const handleClick = e => {
         const zeroIndex = gameState.shuffledTiles.indexOf(0)
         const tileVal = e.target.attributes.value["value"]
@@ -61,7 +64,7 @@ const Board = () => {
                 moveTile(tileValIndex, zeroIndex)
             }
         }
-        
+
     }
 
     const moveTile = (tileValIndex, zeroIndex) => {
@@ -71,7 +74,7 @@ const Board = () => {
         s[tileValIndex] = s[zeroIndex];
         s[zeroIndex] = a;
         setGameState({...gameState, shuffledTiles: s});
-        console.log(gameState.shuffledTiles)
+        console.log(isSolveable(gameState.shuffledTiles))
         if (gameState.shuffledTiles.every((val, index) => val === winArr[index])){
             handleGameOver()
         }
