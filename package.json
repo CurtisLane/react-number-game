@@ -25,6 +25,7 @@
   "homepage": "https://github.com/CurtisLane/react-number-game#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.9.5",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
     "mysql2": "^2.2.5",

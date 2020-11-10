@@ -11,11 +11,15 @@ const useGameModel = () => {
 
     const [highScoresState, setHighScoresState] = useState()
 
+    const [timerState, setTimerState] = useState(0)
+
     return {
         gameState,
         setGameState,
         highScoresState,
-        setHighScoresState
+        setHighScoresState,
+        timerState,
+        setTimerState
     }
 }
 
