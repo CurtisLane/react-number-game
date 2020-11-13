@@ -9,7 +9,7 @@ import GameContext from '../../utils/GameContext'
 const shuffle = array => array.sort(() => Math.random() - 0.5);
 
 // check if an array will create a solveable game
-const isSolveable = array => {
+const numOfInversions = array => {
     const a = array.length
     let inversions = 0
     for (let i = 0; i < a; i++){
@@ -18,22 +18,16 @@ const isSolveable = array => {
                 inversions++ 
             }
     }
-    console.log(array, inversions)
-    if (inversions % 2){
-        return false
-    } else {
-        return true
-    }
+    return inversions
 }
 
 const Board = () => {
     
-    const { gameState, setGameState } = useContext(GameContext)
+    const { gameState, setGameState, timerState, setTimerState, highScoresState } = useContext(GameContext)
 
     const setTiles = () => {
         let shuffledTiles = shuffle(gameState.tileNumbers)
-        let solveable = isSolveable(shuffledTiles)
-        console.log(solveable)
+        let solveable = numOfInversions(shuffledTiles) % 2 === 0
         if (solveable){
             setGameState({...gameState, shuffledTiles: shuffledTiles, gameOver: false})
         } else {
@@ -42,8 +36,10 @@ const Board = () => {
     }
 
     useEffect(() => {
-        setTiles()
-    }, [])
+        if (gameState.gameOver && gameState.firstMove){
+            setTiles()
+        }
+    }, [gameState])
 
     const handleClick = e => {
         const zeroIndex = gameState.shuffledTiles.indexOf(0)
@@ -51,8 +47,12 @@ const Board = () => {
         const tileValIndex = gameState.shuffledTiles.indexOf(parseInt(tileVal))
 
         // if clicked tile is next to 0, move tile
-        if (tileValIndex === 1 || tileValIndex === 3 || tileValIndex === 4 || tileValIndex === 5 || tileValIndex === 7 ){
+        if (tileValIndex === 1 || tileValIndex === 3 || tileValIndex === 4 || tileValIndex === 7 ){
             if (Math.abs(zeroIndex - tileValIndex) === 3 || Math.abs(zeroIndex - tileValIndex) === 1) {
+                moveTile(tileValIndex, zeroIndex)
+            }
+        } else if (tileValIndex === 5){
+            if (Math.abs(zeroIndex - tileValIndex) === 3 || zeroIndex - tileValIndex === -1) {
                 moveTile(tileValIndex, zeroIndex)
             }
         } else if (tileValIndex === 0 || tileValIndex === 6){
@@ -64,7 +64,6 @@ const Board = () => {
                 moveTile(tileValIndex, zeroIndex)
             }
         }
-
     }
 
     const moveTile = (tileValIndex, zeroIndex) => {
@@ -74,7 +73,10 @@ const Board = () => {
         s[tileValIndex] = s[zeroIndex];
         s[zeroIndex] = a;
         setGameState({...gameState, shuffledTiles: s});
-        console.log(isSolveable(gameState.shuffledTiles))
+        if (gameState.firstMove){
+            setTimerState({...timerState, timerStart: true})
+            setGameState({...gameState, firstMove: false})
+        }
         if (gameState.shuffledTiles.every((val, index) => val === winArr[index])){
             handleGameOver()
         }
