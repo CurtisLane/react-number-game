@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import GameContext from '../../utils/GameContext';
 
 export default function ScoreInputModal() {
     const { 
@@ -14,14 +17,16 @@ export default function ScoreInputModal() {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        if (!gameState.gameOver && !gameState.firstMove)
+        if (gameState.gameOver && !gameState.firstMove){
+            handleShow()
+        }
     }, [gameState])
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            {/* <Button variant="primary" onClick={handleShow}>
                 Launch static backdrop modal
-            </Button>
+            </Button> */}
 
             <Modal
                 show={show}

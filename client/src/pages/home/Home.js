@@ -1,6 +1,7 @@
 import React from 'react'
 import Board from '../../components/board/Board'
 import ScoreBoard from '../../components/scoreBoard/ScoreBoard'
+import ScoreInputModal from '../../components/scoreInputModal/ScoreInputModal'
 import Timer from '../../components/timer/Timer'
 
 // Home page contains game board and score board
@@ -24,6 +25,7 @@ export default function Home(){
                     <ScoreBoard />
                 </div>
             </div>
+            <ScoreInputModal />
         </div>
     )
 }
