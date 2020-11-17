@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         }
       },
       score: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           len: [1]

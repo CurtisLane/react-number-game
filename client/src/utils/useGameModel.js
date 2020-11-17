@@ -12,8 +12,9 @@ const useGameModel = () => {
 
     const [highScoresState, setHighScoresState] = useState(
         {
-            currentScore: '',
-            highScores: []
+            highScores: [],
+            blanks: [],
+            currentScore: 0
         }
     )
 

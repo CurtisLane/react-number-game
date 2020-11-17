@@ -34,8 +34,7 @@ export default function Timer(){
     const stopTimer = () => {
         let stopTime = parseInt(timerState.timer)
         clearInterval(intervalTimer)
-        setTimerState({timer: stopTime, timerStart: false, timerStop: true })
-        setHighScoresState({...highScoresState, currentScore: stopTime})
+        setTimerState({...timerState, timerStart: false, timerStop: true })
     }
 
     useEffect(() => {
