@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import GameContext from '../../utils/GameContext';
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
+import API from '../../utils/API';
 
 let yourTime;
 
@@ -31,9 +32,11 @@ export default function ScoreInputModal() {
     }
     const handleSave = () => {
         // Save name and score to database
-        console.log(highScoresState.currentScore)
-
-        handleClose()
+        const playerData = {name: nameValue, score: yourTime}
+        console.log(highScoresState.highScores)
+        API.postScore(playerData)
+        .then(r => console.log(r))
+        .then(handleClose)
     }
     const calculateScore = () => {
         const score = timerState.timer
@@ -45,7 +48,19 @@ export default function ScoreInputModal() {
     }
 
     const handleNameInput = e => {
-        //console.log(e.target.attributes)
+        const modalMessage = document.getElementById('modalMessage')
+        const smallWarn = document.createElement('small')
+
+        if (e.target.value.length <= 12){
+            setNameValue(e.target.value)
+
+            if (e.target.value.length === 12){
+                smallWarn.textContent = 'Name must be 12 or less characters long.'
+                modalMessage.appendChild(smallWarn)
+            } else {
+                if (modalMessage.firstChild) modalMessage.removeChild(modalMessage.firstChild)
+            }
+        }
     }
 
     useEffect(() => {
@@ -54,10 +69,10 @@ export default function ScoreInputModal() {
             handleShow()
         } 
         // temp show modal on load
-        else {
-            calculateScore()
-            handleShow()
-        }
+        // else {
+        //     calculateScore()
+        //     handleShow()
+        // }
     }, [gameState])
 
     return (
@@ -74,8 +89,7 @@ export default function ScoreInputModal() {
                     <Modal.Title>You Win!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Good job! Your time is {yourTime}! Enter your name to save your score.
-                    <div>
+                        Good job! Your time is {yourTime}! Enter your name to save your score.                    
                         <InputGroup className="my-3">
                             <InputGroup.Prepend>
                                 <InputGroup.Text id="inputGroup-sizing-default">Name</InputGroup.Text>
@@ -85,14 +99,10 @@ export default function ScoreInputModal() {
                                 aria-describedby="inputGroup-sizing-default"
                                 type="text"
                                 value={nameValue}
-                                onChange={e => {
-                                    setNameValue(e.target.value)
-                                    console.log(nameValue)
-                                    handleNameInput()
-                                }}
+                                onChange={handleNameInput}
                             />
-                        </InputGroup>                        
-                    </div>
+                        </InputGroup>
+                        <div id="modalMessage"></div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

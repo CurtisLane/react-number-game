@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Card from 'react-bootstrap/Card'
 import Tile from '../tile/Tile'
 import GameContext from '../../utils/GameContext'
+import './board.css'
 
 // Includes game logic, displays numbered tiles
 
@@ -46,6 +47,8 @@ const Board = () => {
         const tileVal = e.target.attributes.value["value"]
         const tileValIndex = gameState.shuffledTiles.indexOf(parseInt(tileVal))
 
+        /* \/ Convert to switch statement \/ */
+
         // if clicked tile is next to 0, move tile
         if (tileValIndex === 1 || tileValIndex === 3 || tileValIndex === 4 || tileValIndex === 7 ){
             if (Math.abs(zeroIndex - tileValIndex) === 3 || Math.abs(zeroIndex - tileValIndex) === 1) {
@@ -88,10 +91,13 @@ const Board = () => {
     }
 
     return (
-        <Card className="bg-dark" style={{ width: "100%", padding: "-6.25% 0 -6.25% 0", position: "relative" }}>
+        // id="boardCard" below
+        <Card className="bg-dark">
             <Card.Body>
-                <div style={{position: "relative", bottom: 0}} className="row no-gutters">
+                {/* id="boardCardBody" below */}
+                <div className="row no-gutters">
                     {gameState.shuffledTiles.map(t => {
+                        // returns tile if number is not 0
                         return t > 0 ?
                             (
                                 <div key={t} value={t} className="col-4">

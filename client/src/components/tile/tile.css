@@ -1,33 +1,71 @@
 .num-tile {
     width: 100%;
     height: 100%;
-    padding-bottom: 52.5%;
-    position: relative;
-    bottom: 0;
+    font-size: 5rem;
 }
 
 @media screen and (max-width: 1200px){
     .num-tile {
-        padding-bottom: 47.5%;
-    }
-}
-@media screen and (max-width: 750px){
-    .num-tile {
-        padding-bottom: 50%;
+        font-size: 4.25rem;
     }
 }
 @media screen and (max-width: 600px){
     .num-tile {
-        padding-bottom: 45%;
+        font-size: 4.5rem;
+    }
+}
+@media screen and (max-width: 530px){
+    .num-tile {
+        font-size: 4.25rem;
+    }
+}
+@media screen and (max-width: 500px){
+    .num-tile {
+        font-size: 4rem;
     }
 }
 @media screen and (max-width: 450px){
     .num-tile {
-        padding-bottom: 40%;
+        font-size: 3.75rem;
+    }
+}
+@media screen and (max-width: 420px){
+    .num-tile {
+        font-size: 3.5rem;
+    }
+}
+@media screen and (max-width: 400px){
+    .num-tile {
+        font-size: 3.25rem;
+    }
+}
+@media screen and (max-width: 375px){
+    .num-tile {
+        font-size: 3rem;
+    }
+}
+@media screen and (max-width: 350px){
+    .num-tile {
+        font-size: 2.5rem;
+    }
+}
+@media screen and (max-width: 325px){
+    .num-tile {
+        font-size: 2rem;
     }
 }
 @media screen and (max-width: 300px){
     .num-tile {
-        padding-bottom: 35%;
+        font-size: 1.5rem;
+    }
+}
+@media screen and (max-width: 265px){
+    .num-tile {
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 240px){
+    .num-tile {
+        font-size: .5rem;
     }
 }

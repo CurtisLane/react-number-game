@@ -1,0 +1,10 @@
+#boardCard {
+    width: 100%;
+    padding: -6.25% 0 -6.25% 0;
+    position: relative;
+}
+
+#boardCardBody {
+    position: relative;
+    bottom: 0;
+}

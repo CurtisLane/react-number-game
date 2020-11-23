@@ -28,7 +28,7 @@ export default function ScoreBoard() {
 
     useEffect(() => {
         getScores()
-    }, [])
+    }, [gameState])
 
 
 
@@ -40,7 +40,7 @@ export default function ScoreBoard() {
                     <div className="row no-gutters">                        
                         {highScoresState.highScores.map((score, i) => {
                             return (
-                                <div className="col-6 col-lg-4" key={score.name}>
+                                <div className="col-6 col-lg-4" key={score.name + i}>
                                     <ListGroup.Item className="bg-secondary">
                                             {i + 1}. {score.name} {score.score}
                                     </ListGroup.Item>
